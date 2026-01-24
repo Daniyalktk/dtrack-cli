@@ -1,4 +1,4 @@
-dtrack
+dtrack-cli
 dist/
 .vscode/
 vendor/

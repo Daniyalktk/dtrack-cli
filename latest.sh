@@ -3,8 +3,9 @@ set -euo pipefail
 
 OWNER="MedUnes"
 REPO="dtrack-cli"
-BINARY_PATTERN="dtrack-cli"
-CHECKSUM_PATTERN="_checksums.txt"
+BINARY_NAME="dtrack-cli"
+RELEASE_PATTERN="dtrack-cli_Linux_x86_64.tar.gz"
+CHECKSUM_PATTERN="checksums.txt"
 
 if ! command -v curl &> /dev/null; then
     echo "Error: curl is not installed. Please install it."
@@ -29,13 +30,11 @@ if [ -z "$LATEST_RELEASE_INFO" ]; then
   exit 1
 fi
 
-BINARY_URL=$(echo "$LATEST_RELEASE_INFO" | jq -r ".assets[] | select(.name | endswith(\"$BINARY_PATTERN\")) | .browser_download_url")
+RELEASE_URL=$(echo "$LATEST_RELEASE_INFO" | jq -r ".assets[] | select(.name | endswith(\"$RELEASE_PATTERN\")) | .browser_download_url")
+CHECKSUM_URL=$(echo "$LATEST_RELEASE_INFO" | jq -r ".assets[] | select(.name | endswith(\"$CHECKSUM_PATTERN\")) | .browser_download_url")
 
-CHECKSUM_SUFFIX="_checksum.txt"
-CHECKSUM_URL="$BINARY_URL$CHECKSUM_SUFFIX"
-
-if [ -z "$BINARY_URL" ]; then
-  echo "Error: Could not find the latest release asset matching the pattern '$BINARY_PATTERN'."
+if [ -z "$RELEASE_URL" ]; then
+  echo "Error: Could not find the latest release asset matching the pattern '$RELEASE_PATTERN'."
   exit 1
 fi
 
@@ -44,14 +43,14 @@ if [ -z "$CHECKSUM_URL" ]; then
   exit 1
 fi
 
-BINARY_FILE=$(basename "$BINARY_URL")
+RELEASE_FILE=$(basename "$RELEASE_URL")
 CHECKSUM_FILE=$(basename "$CHECKSUM_URL")
 
-echo "Found latest package: $BINARY_FILE"
+echo "Found latest package: $RELEASE_FILE"
 echo "Found latest checksum file: $CHECKSUM_FILE"
 
-echo "Downloading package: $BINARY_FILE"
-if ! wget -q -O "$BINARY_FILE" "$BINARY_URL"; then
+echo "Downloading package: $RELEASE_FILE"
+if ! wget -q -O "$RELEASE_FILE" "$RELEASE_URL"; then
     echo "Error: Failed to download package."
     exit 1
 fi
@@ -59,20 +58,20 @@ fi
 echo "Downloading checksum file: $CHECKSUM_FILE"
 if ! wget -q -O "$CHECKSUM_FILE" "$CHECKSUM_URL"; then
     echo "Error: Failed to download checksum file."
-    rm -f "$BINARY_FILE"
+    rm -f "$RELEASE_FILE"
     exit 1
 fi
 echo "Verifying checksum..."
 
-EXPECTED_CHECKSUM=$(grep "$BINARY_FILE" "$CHECKSUM_FILE" | awk '{print $1}')
+EXPECTED_CHECKSUM=$(grep "$RELEASE_FILE" "$CHECKSUM_FILE" | awk '{print $1}')
 
 if [ -z "$EXPECTED_CHECKSUM" ]; then
-    echo "Error: Could not find checksum for '$BINARY_FILE' in '$CHECKSUM_FILE'."
-    rm -f "$BINARY_FILE" "$CHECKSUM_FILE"
+    echo "Error: Could not find checksum for '$RELEASE_FILE' in '$CHECKSUM_FILE'."
+    rm -f "$RELEASE_FILE" "$CHECKSUM_FILE"
     exit 1
 fi
 
-ACTUAL_CHECKSUM=$(sha256sum "$BINARY_FILE" | awk '{print $1}')
+ACTUAL_CHECKSUM=$(sha256sum "$RELEASE_FILE" | awk '{print $1}')
 
 if [ "$ACTUAL_CHECKSUM" = "$EXPECTED_CHECKSUM" ]; then
     echo "Checksum verification successful."
@@ -80,12 +79,17 @@ else
     echo "Error: Checksum verification failed!"
     echo "  Expected: $EXPECTED_CHECKSUM"
     echo "  Actual:   $ACTUAL_CHECKSUM"
-    rm -f "$BINARY_FILE" "$CHECKSUM_FILE"
+    rm -f "$RELEASE_FILE" "$CHECKSUM_FILE"
     exit 1
 fi
-
-
-echo "Package downloaded successfully."
+echo "Unpacking tarball.."
+tar -zxvf "$RELEASE_FILE" "$BINARY_NAME"
+chmod +x "$BINARY_NAME"
 echo "Cleaning up downloaded files."
-rm "$CHECKSUM_FILE"
+
+rm "$CHECKSUM_FILE" "$RELEASE_FILE"
+
+./$BINARY_NAME
+
+
 exit 0
