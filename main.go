@@ -103,7 +103,7 @@ func main() {
 }
 
 func printUsage() {
-	fmt.Println("Usage: go run deploy_sbom.go [flags] <API_KEY> <PROJECT_NAME> [VERSION]")
+	fmt.Println("Usage: go run main.go [flags] <API_KEY> <PROJECT_NAME> [VERSION]")
 	fmt.Println("\nArguments:")
 	fmt.Println("  VERSION is optional for -list, but required for -upload/-latest/-clean")
 	fmt.Println("\nFlags:")

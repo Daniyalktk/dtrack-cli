@@ -68,7 +68,7 @@ go run main.go -help
 ### Option 3: Build Binary
 
 ```bash
-go build -o dtrack-cli deploy_sbom.go
+go build -o dtrack-cli main.go
 ./dtrack-cli -help
 
 ```
@@ -82,7 +82,7 @@ go build -o dtrack-cli deploy_sbom.go
 Use the `-ci` shortcut flag, which enables `-upload`, `-latest`, and `-clean` simultaneously.
 
 ```bash
-# Syntax: go run deploy_sbom.go [flags] <API_KEY> <PROJECT_NAME> <VERSION>
+# Syntax: go run main.go [flags] <API_KEY> <PROJECT_NAME> <VERSION>
 dtrack -ci -file ./build/bom.json $DT_API_KEY "My-Web-App" "v1.2.0"
 
 ```
